@@ -7,8 +7,8 @@ set /p DIRECTORY=Enter local directory path:
 set /p SMB_SERVER=Enter SMB server path (e.g., \\server\share):
 set /p SMB_USERNAME=Enter SMB username:
 set /p SMB_PASSWORD=Enter SMB password:
-set /p FOLDER=Enter remote folder path:
-set REMOTE_FOLDER=%SMB_SERVER%\FOLDER
+set /p FOLDER=Enter remote folder name:
+set REMOTE_FOLDER=%SMB_SERVER%\%FOLDER%
 
 REM Create log file
 set TIMESTAMP=%date:~10,4%-%date:~4,2%-%date:~7,2%_%time:~0,2%-%time:~3,2%-%time:~6,2%
@@ -30,7 +30,7 @@ IF ERRORLEVEL 0 (
         echo Copying "%%f" to "%REMOTE_FOLDER%"...
         echo Copying "%%f" to "%REMOTE_FOLDER%" >> %LOG_FILE%
         
-        xcopy "%%f" "%REMOTE_FOLDER%\%%~nxf" /c /i /y > nul 2>&1
+        xcopy "%%f" "%REMOTE_FOLDER%\" /c /i /y > nul 2>&1
         
         IF ERRORLEVEL 0 (
             echo Success: Copied %%~nxf
